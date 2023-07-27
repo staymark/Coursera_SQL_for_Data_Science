@@ -1,0 +1,42 @@
+Coursera - UC Davis - SQL for Data Science
+
+Module 1 Coding Questions
+
+1. What is Robert King's mailing address?
+
+    SQL Code:
+
+        SELECT
+            *
+        FROM
+            Employees;
+    
+    Answer: 590 Columbia Boulevard West, Lethbridge, AB, CANADA T1K 5N8
+
+2. Retrieve the FirstName, LastName, Birthdate, Adress, City, and State from the Employees table.
+
+    SQL Code:
+
+        SELECT
+            FirstName,
+            LastName,
+            Birthdate,
+            Address,
+            City,
+            State
+        FROM
+            Employees;
+    
+    Answer: Steve
+
+3. Retrieve all the columns from the Tracks table, but only return 20 rows.
+
+    SQL Code:
+
+        SELECT
+            *
+        FROM
+            Tracks
+        LIMIT 20;
+    
+    Answer: 375418

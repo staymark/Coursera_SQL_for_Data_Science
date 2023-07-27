@@ -1,0 +1,134 @@
+Coursera - UC Davis - SQL for Data Science
+
+Module 3 Coding Assignment
+
+1. Using a subquery, find the names of all the tracks for the album "Californication".
+What is the title of the 8th track?
+
+    SQL Code:
+    
+        SELECT
+            Tracks.Name,
+            Albums.title
+        FROM 
+            Tracks
+        LEFT JOIN 
+            Albums ON Albums.AlbumId = Tracks.AlbumId
+        WHERE 
+            Albums.Title = 'Californication';
+    
+    Answer: Porcelain
+
+2. Find the total number of invoices for each customer along with the customer's full
+name, city, and email. After running the query described above, what is the email address
+of the 5th person, František Wichterlová? Enter the answer below (feel free to copy and paste).
+
+    SQL Code:
+
+        SELECT
+            Customers.FirstName,
+            Customers.LastName,
+            Customers.City,
+            Customers.Email,
+            (SELECT
+                COUNT(DISTINCT InvoiceId)
+            FROM 
+                Invoices
+            WHERE
+                Customers.CustomerId = Invoices.CustomerId) AS InvoiceId_count
+        FROM 
+            Customers;
+    
+    Answer: frantisekw@jetbrains.com
+
+3. Retrieve the track name, album, artistID, and trackID for all the albums. What is the song
+title of trackID 12 from the "For Those About to Rock We Salute You" album? Enter the answer below.
+
+    SQL Code:
+    
+        SELECT
+            Albums.Title,
+            Albums.ArtistId,
+            Tracks.Name,
+            Tracks.TracksId
+        FROM 
+            Albums
+        LEFT JOIN 
+            Tracks ON Albums.AlbumId = Tracks.AlbumId;
+
+    Answer: Breaking The Rules
+
+4. Retrieve a list with the managers last name, and the last name of the employees who report to
+him or her. After running the query described above, who are the reports for the manager named
+Mitchell (select all that apply)?
+
+    SQL Code:
+
+        SELECT
+            manager.LastName AS Manager,
+            employee.LastName AS Employee
+        FROM
+            Employees employee
+        LEFT JOIN
+            Employees manager ON employee.ReportsTo = manager.EmployeeId;
+    
+    Answer: King, Callahan
+
+5. Find the name and ID of the artists who do not have albums. After running the query described
+above, two of the records returned have the sasme last name. Enter that name below.
+
+    SQL Code:
+
+        SELECT
+            Artists.Name,
+            Artists.ArtistId
+        FROM
+            Artists
+        LEFT JOIN
+            Albums ON Artists.ArtistId = Albums.ArtistId
+        WHERE
+            Albums.AlbumId IS NULL;
+    
+    Answer: Gilberto
+
+6. Use a UNION to create a list of all the employee's and customer's first names and last names
+ordered by the last name in descending order. After running the query described above, determine
+what is the last name of the 6th record? Enter it below. Remember to order things in descending
+order to be sure to get the correct answer.
+
+    SQL Code:
+
+        SELECT
+            FirstName,
+            LastName
+        FROM
+            Employees
+        UNION
+        SELECT
+            FirstName,
+            LastName
+        FROM
+            Customers
+        ORDER BY
+            LastName DESC;
+    
+    Answer: Taylor
+
+7. See if there are any customers who have a different city listed in their billing city versus
+their customer city. Indicate your answer below.
+
+    SQL Code:
+
+        SELECT
+            Customers.CustomerId,
+            Customers.LastName,
+            Customers.City,
+            Invoices.BillingCity
+        FROM
+            Customers
+        LEFT JOIN
+            Invoices ON Customers.CustomerId = Invoices.CustomerId
+        WHERE
+            Customers.City != Invoices.BillingCity;
+    
+    Answer: No customers have a different city listed in their billing city versus customer city.
